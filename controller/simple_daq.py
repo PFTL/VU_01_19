@@ -31,6 +31,8 @@ class SimpleDaq:
         return value
 
     def set_analog_value(self, channel, value):
+        if value > 4095:
+            raise Exception('Value cant be higher than 4095')
         write_string = 'OUT:CH{}:{}'.format(channel, value)
         self.write(write_string)
 
