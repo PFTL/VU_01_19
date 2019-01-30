@@ -4,16 +4,16 @@ User:
 DAQ:
   name: AnalogDaq
   port: /dev/ttyACM0 # (OR COM3, etc)
+  resistance: 220ohm
 
 Scan:
-  start: 0V
+  start: 0mV
   stop: 3.3V
-  step: 100mV
+  step: 400mV
   channel_out: 0
   channel_in: 0
-  delay: 100ms
+  delay: 50ms
 
 Save:
   folder: /home/aquiles/Data
-  folder_win: C:\\Users\\Aqulies
-
+  filename: IV_data

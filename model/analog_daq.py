@@ -1,8 +1,5 @@
 from controller.simple_daq import SimpleDaq
-from pint import UnitRegistry
-
-
-ur = UnitRegistry()
+from model import ur
 
 
 class AnalogDaq:
