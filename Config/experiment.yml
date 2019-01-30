@@ -1,0 +1,19 @@
+User:
+  name: Aquiles
+
+DAQ:
+  name: AnalogDaq
+  port: /dev/ttyACM0 # (OR COM3, etc)
+
+Scan:
+  start: 0V
+  stop: 3.3V
+  step: 100mV
+  channel_out: 0
+  channel_in: 0
+  delay: 100ms
+
+Save:
+  folder: /home/aquiles/Data
+  folder_win: C:\\Users\\Aqulies
+
