@@ -3,7 +3,7 @@ from time import sleep
 import os
 import yaml
 import numpy as np
-from model.analog_daq import AnalogDaq
+
 from model import ur
 
 
@@ -19,6 +19,13 @@ class Experiment:
         f.close()
 
     def load_daq(self):
+        if self.config['DAQ']['name'] == 'AnalogDaq':
+            from model.analog_daq import AnalogDaq
+        elif self.config['DAQ']['name'] == 'DummyDaq':
+            from model.dummy_daq import AnalogDaq
+        else:
+            raise Exception('Daq model not recognized')
+
         port = self.config['DAQ']['port']
         resistance = self.config['DAQ']['resistance']
         resistance = ur(resistance)
@@ -31,11 +38,13 @@ class Experiment:
         step = ur(self.config['Scan']['step'])
         num_points = (stop-start)/step
         num_points = round(num_points.m_as('')) + 1
+        self.num_points = num_points
         voltages = np.linspace(start.m_as('V'), stop.m_as('V'), num_points)
         channel_out = self.config['Scan']['channel_out']
         self.scan_data = []
         channel_in = self.config['Scan']['channel_in']
         delay = ur(self.config['Scan']['delay'])
+        self.keep_scanning = True
         for voltage in voltages:
             self.scan_running = True
             voltage = voltage * ur('V')
@@ -43,6 +52,8 @@ class Experiment:
             current = self.daq.read_current(channel_in)
             self.scan_data.append([voltage, current])
             sleep(delay.m_as('s'))
+            if not self.keep_scanning:
+                break
         self.scan_running = False
 
     def apply_voltage(self, channel, voltage):
@@ -69,7 +80,7 @@ class Experiment:
         header += "# Voltage, Current\n"
         f.write(header)
         for data in self.scan_data:
-            line = "{}, {}\n".format(data[0], data[1])
+            line = "{:2.3f}, {:2.3f}\n".format(data[0], data[1])
             f.write(line)
         f.close()
 
@@ -77,6 +88,13 @@ class Experiment:
         f = open(metadata_file, 'w')
         yaml.dump(self.config, f)
         f.close()
+
+    def finalize(self):
+        self.keep_scanning = False
+        voltage = ur('0V')
+        self.daq.set_voltage(0, voltage)
+        self.daq.set_voltage(1, voltage)
+        self.daq.finalize()
 
 if __name__ == '__main__':
     import threading
