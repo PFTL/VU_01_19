@@ -2,8 +2,8 @@ User:
   name: Aquiles
 
 DAQ:
-  name: AnalogDaq
-  port: /dev/ttyACM0 # (OR COM3, etc)
+  name: AnalogDaq # Choose DummyDaq or AnalogDaq
+  port: /dev/ttyACM1 # (OR COM3, etc)
   resistance: 220ohm
 
 Scan:

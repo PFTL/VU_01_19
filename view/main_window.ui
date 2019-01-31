@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
-    <height>367</height>
+    <width>1452</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@
           </size>
          </property>
          <property name="maxLength">
-          <number>2</number>
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -162,6 +162,16 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(252, 233, 79)</string>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -169,8 +179,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>933</width>
-     <height>22</height>
+     <width>1452</width>
+     <height>39</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -180,7 +190,15 @@
     <addaction name="action_Save"/>
     <addaction name="actionOpen_File"/>
    </widget>
+   <widget class="QMenu" name="menuScan">
+    <property name="title">
+     <string>Scan</string>
+    </property>
+    <addaction name="action_Start"/>
+    <addaction name="action_Stop"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuScan"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Save">
@@ -193,7 +211,23 @@
   </action>
   <action name="actionOpen_File">
    <property name="text">
-    <string>Open File</string>
+    <string>O&amp;pen File</string>
+   </property>
+  </action>
+  <action name="action_Start">
+   <property name="text">
+    <string>Start</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>
